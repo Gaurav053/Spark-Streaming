@@ -34,7 +34,7 @@ object SparkStreamingFromDirectory {
 
     groupDF.writeStream
       .format("console")
-      .outputMode("complete")
+      .outputMode("append")
       .start()
       .awaitTermination()
   }
