@@ -8,8 +8,7 @@ object SparkStreamingFromDirectory {
   def main(args: Array[String]): Unit = {
 
     val spark:SparkSession = SparkSession.builder()
-      .master("local[3]")
-      .appName("SparkByExamples")
+      .appName("ReadFromDirectory")
       .getOrCreate()
 
     spark.sparkContext.setLogLevel("ERROR")
