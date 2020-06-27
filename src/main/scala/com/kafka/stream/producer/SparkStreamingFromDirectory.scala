@@ -14,35 +14,23 @@ object SparkStreamingFromDirectory {
 
     spark.sparkContext.setLogLevel("ERROR")
 
-    val schema = StructType(
-      List(
-        StructField("RecordNumber", IntegerType, true),
-        StructField("Zipcode", StringType, true),
-        StructField("ZipCodeType", StringType, true),
-        StructField("City", StringType, true),
-        StructField("State", StringType, true),
-        StructField("LocationType", StringType, true),
-        StructField("Lat", StringType, true),
-        StructField("Long", StringType, true),
-        StructField("Xaxis", StringType, true),
-        StructField("Yaxis", StringType, true),
-        StructField("Zaxis", StringType, true),
-        StructField("WorldRegion", StringType, true),
-        StructField("Country", StringType, true),
-        StructField("LocationText", StringType, true),
-        StructField("Location", StringType, true),
-        StructField("Decommisioned", StringType, true)
-      )
-    )
+    val schema = new StructType()
+      .add("id",IntegerType)
+      .add("firstname",StringType)
+      .add("middlename",StringType)
+      .add("lastname",StringType)
+      .add("dob_year",IntegerType)
+      .add("dob_month",IntegerType)
+      .add("gender",StringType)
+      .add("salary",IntegerType)
 
     val df = spark.readStream
       .schema(schema)
-      .json("c:/tmp/stream_folder")
+      .json("hdfs://HDPHAPR/user/cbhdj/test/data")
 
     df.printSchema()
 
-    val groupDF = df.select("Zipcode")
-      .groupBy("Zipcode").count()
+    val groupDF = df.select("firstname")
     groupDF.printSchema()
 
     groupDF.writeStream
