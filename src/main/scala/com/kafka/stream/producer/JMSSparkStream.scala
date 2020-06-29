@@ -77,8 +77,8 @@ object JMSSparkStream {
 
 
 
-    val msgs = JmsStreamUtils.createSynchronousJmsQueueStream(ssc, JmsStreamUtils.JndiMessageConsumerFactory(jndiProperties, destinationInfo, JNDI_connection_Factory_name, user, credentials),
-
+    val msgs = JmsStreamUtils.createSynchronousJmsQueueStream(ssc,
+      JmsStreamUtils.JndiMessageConsumerFactory(jndiProperties, destinationInfo, JNDI_connection_Factory_name, user, credentials),
       converter,
       1000,
       1.second,
@@ -91,9 +91,8 @@ object JMSSparkStream {
         // This is where you process the messages received
         println("messages received:")
         rdd.foreach(println)
-        // You can save the collection of messages to HDFS (or alternatively locally by specifying "file:///")
-        // The timestamp was added here to ensure unique folder ids
-        rdd.saveAsTextFile("hdfs:///...-"+Calendar.getInstance().getTimeInMillis())
+
+       // rdd.saveAsTextFile("hdfs:///...-"+Calendar.getInstance().getTimeInMillis())
       } else {
         println("rdd is empty")
       }
@@ -112,13 +111,12 @@ object JMSSparkStream {
       System.exit(1)
     }
 
-    val Array(host, port, qm, qn) = args
+    //val Array(host, port, qm, qn) = args
 
     // Specify the path for the checkpoint directory can be local file or hdfs
-    // This is used to recover messages if the application fails
     val checkpointDirectory = "hdfs://user/cbhdj/spark/checkpoint"
 
-    // Get StreamingContext from checkpoint data or create a new one
+    // TODO: Get StreamingContext from checkpoint data or create a new one
     val streamC = StreamingContext.getOrCreate(checkpointDirectory, () => functionToCreateContext(host, port, qm, qn, checkpointDirectory))
 
     streamC.start()
