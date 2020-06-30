@@ -1,7 +1,7 @@
 package com.kafka.stream.producer
 
 import org.apache.spark.sql.SparkSession
-import org.apache.spark.sql.types.{IntegerType, StringType, StructField, StructType}
+import org.apache.spark.sql.types.{IntegerType, StringType, StructType}
 
 object SparkStreamingFromDirectory {
 
@@ -33,8 +33,9 @@ object SparkStreamingFromDirectory {
     groupDF.printSchema()
 
     groupDF.writeStream
-      .format("console")
-      .outputMode("append")
+      .format("kafka")
+      .option("kafka.bootsrap.servers", "turia.atldc.nscorp.com:6667")
+      .option("topic", "DE.ATC.BOS.Utcs.Raw")
       .start()
       .awaitTermination()
   }
