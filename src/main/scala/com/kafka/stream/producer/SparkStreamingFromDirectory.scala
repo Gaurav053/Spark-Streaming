@@ -1,6 +1,8 @@
 package com.kafka.stream.producer
+
 import org.apache.spark.sql.SparkSession
 import org.apache.spark.sql.types.{IntegerType, StringType, StructType}
+
 
 object SparkStreamingFromDirectory {
 
@@ -21,7 +23,6 @@ object SparkStreamingFromDirectory {
       .add("dob_month",IntegerType)
       .add("gender",StringType)
       .add("salary",IntegerType)
-
     val df = spark.readStream
       .schema(schema)
       .json("hdfs://HDPHAPR/user/cbhdj/test/data")
