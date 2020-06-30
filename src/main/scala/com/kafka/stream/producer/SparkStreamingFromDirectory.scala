@@ -33,7 +33,7 @@ object SparkStreamingFromDirectory {
 
     groupDF.writeStream
       .format("kafka")
-      .option("kafka.bootsrap.servers", "turia.atldc.nscorp.com:6667")
+      .option("kafka.bootstrap.servers", "turia.atldc.nscorp.com:6667")
       .option("topic", "DE.ATC.BOS.Utcs.Raw")
       .start()
       .awaitTermination()
