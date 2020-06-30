@@ -36,7 +36,7 @@ object SparkStreamingFromDirectory {
       .format("kafka")
       .option("kafka.bootstrap.servers", "turia.atldc.nscorp.com:6667")
       .option("topic", "DE.ATC.BOS.Utcs.Raw")
-      .option("checkPointLocation", "hdfs://HDPHAPR/user/cbhdj/spark_checkpoint_2")
+      .option("checkpointLocation", "hdfs://HDPHAPR/user/cbhdj/spark_checkpoint_2")
       .start()
       .awaitTermination()
   }
