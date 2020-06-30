@@ -32,7 +32,9 @@ object SparkStreamingFromDirectory {
     val groupDF = df.select("firstname")
     groupDF.printSchema()
 
-    groupDF.writeStream
+    df.selectExpr("CAST(id as STRING) AS key",
+    "to_json(struct((*) AS value")
+      .writeStream
       .format("kafka")
       .option("kafka.bootstrap.servers", "turia.atldc.nscorp.com:6667")
       .option("topic", "DE.ATC.BOS.Utcs.Raw")
