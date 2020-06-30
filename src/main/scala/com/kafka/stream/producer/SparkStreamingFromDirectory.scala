@@ -33,7 +33,7 @@ object SparkStreamingFromDirectory {
     groupDF.printSchema()
 
     df.selectExpr("CAST(id as STRING) AS key",
-    "to_json(struct((*) AS value")
+    "to_json(struct(*)) AS value")
       .writeStream
       .format("kafka")
       .option("kafka.bootstrap.servers", "turia.atldc.nscorp.com:6667")
